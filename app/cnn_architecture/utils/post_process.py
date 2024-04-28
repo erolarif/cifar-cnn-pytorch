@@ -21,14 +21,12 @@ class PostProcess:
     number_of_epoch : int
     learning_rate : float
     momentum : float
-
     parameters:Any=None
-
     correct = 0
     iterations = 0
     iter_loss = 0
-    testing_loss = 0.0 
-
+    testing_loss = 0.0
+    logger:Any=None
 
     def __post_init__(self,):
         self.loss_fn = nn.CrossEntropyLoss()
@@ -50,6 +48,14 @@ class PostProcess:
         _, predicted = torch.max(outputs , 1)
         self.correct += (predicted == labels).sum()
         self.iterations += 1
+
+    def save_model(self,model, test_loss,epoch):
+        if epoch <= 0:
+            return
+        if test_loss[-1] > test_loss[-2]:
+            return
+        torch.save(model, "model_best.pt")
+        self.logger.info("Model saved due to decrease test loss from the previous epoch.")
 
     def __call__(self,model,train_loader,test_loader,train_dataset,test_dataset):
         if PostProcess.check_cuda_availibility():
@@ -104,4 +110,7 @@ class PostProcess:
             test_loss.append(self.testing_loss/self.iterations)
             test_accuracy.append((100*self.correct/len(test_dataset)))
 
-            print('Epoch{}/{}, Training Loss: {:.3f}, Training Accuracy : {:.3f}, Testing Loss: {:.3f}, Testing Accuracy : {:.3f}'.format(epoch+1 , self.number_of_epoch, train_loss[-1], train_accuracy[-1], test_loss[-1] , test_accuracy[-1]))
+            self.logger.info('Epoch{}/{}, Training Loss: {:.3f}, Training Accuracy : {:.3f}, Testing Loss: {:.3f}, Testing Accuracy : {:.3f}'.format(epoch+1 , self.number_of_epoch, train_loss[-1], train_accuracy[-1], test_loss[-1] , test_accuracy[-1]))
+            
+            self.save_model(model,test_loss,epoch)
+
