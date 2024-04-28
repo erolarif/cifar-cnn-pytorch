@@ -6,8 +6,6 @@ import matplotlib.pyplot as plt
 from typing import Any
 
 
-#TODO metodlara acıklama eklenecek
-#TODO input outputlara type verilecek
 @dataclass
 class PostProcess:
     save_model_path:str
@@ -15,34 +13,64 @@ class PostProcess:
     learning_rate : float
     momentum : float
     parameters:Any=None
-    correct = 0
-    iterations = 0
-    iter_loss = 0
-    testing_loss = 0.0
+    correct:int = 0
+    iterations:int = 0
+    iter_loss:int = 0
+    testing_loss:float = 0.0
     logger:Any=None
 
-    def __post_init__(self,):
+    def __post_init__(self,) -> None:
+        """
+        Initialize and decide loss_func and optimization algorithm
+        """
         self.loss_fn = nn.CrossEntropyLoss()
         self.optimizer = torch.optim.SGD(self.parameters, lr=self.learning_rate, momentum=self.momentum)
     
     @staticmethod
     def check_cuda_availibility():
+        """
+        Control the cuda availibility
+
+        Returns
+        cuda_availibility: bool
+        """
         cuda_availibility = torch.cuda.is_available()
         return cuda_availibility
     
-    def optimize_model(self,outputs,labels):
+    def optimize_model(self,outputs: Any,labels:Any) -> None:
+        """
+        Backpropagation and update the weights
+        
+        Args
+        outputs: result of forward pass
+        labels: label of image 
+        """
         loss = self.loss_fn(outputs,labels)
         self.iter_loss += loss.item()
         self.optimizer.zero_grad()
         loss.backward()
-        self.optimizer.step()      #update the weights
+        self.optimizer.step()
     
-    def calc_accuracy_for_each_iteration(self,outputs,labels):
+    def calc_accuracy_for_each_iteration(self,outputs:Any,labels:Any)-> None:
+        """
+        Find predicted_label and update correct predicted count
+                
+        Args
+        outputs: result of forward pass
+        labels: label of image 
+        """
         _, predicted = torch.max(outputs , 1)
         self.correct += (predicted == labels).sum()
         self.iterations += 1
     
-    def draw_loss_graph(self,train_loss,test_loss):
+    def draw_loss_graph(self,train_loss:Any,test_loss:Any)->None:
+        """
+        draw loss graph end of the train
+
+        Args
+        train_loss : loss list of train results
+        test_loss : test list of test results
+        """
         fig = plt.figure(figsize = (10,10))
         plt.plot(train_loss , label = 'Training Loss')
         plt.plot(test_loss , label = 'Testing Loss')
@@ -50,7 +78,14 @@ class PostProcess:
         plt.savefig('./logs/loss_plot.png')  # Grafiği 'loss_plot.png' olarak kaydediyoruz
         plt.show()
 
-    def save_model(self,model, test_loss,epoch):
+    def save_model(self,model:Any, test_loss:list ,epoch:int) -> None:
+        """
+        Save model if loss decreae according to tthe previous epoch
+        
+        Args
+        test_loss : test list of test results
+        epoch : number of saved epoch 
+        """
         if epoch <= 0:
             return
         if test_loss[-1] > test_loss[-2]:
@@ -58,7 +93,10 @@ class PostProcess:
         torch.save(model, self.save_model_path)
         self.logger.info("Model saved due to decrease test loss from the previous epoch.")
 
-    def __call__(self,model,train_loader,test_loader,train_dataset,test_dataset):
+    def __call__(self,model:Any,train_loader:list,test_loader:list,train_dataset:list,test_dataset:list)-> None:
+        """
+        Train model with __call__ method.
+        """
         if PostProcess.check_cuda_availibility():
             model = model.cuda()
 

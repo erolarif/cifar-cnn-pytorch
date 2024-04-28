@@ -5,8 +5,6 @@ import torchvision.datasets as datasets
 
 from typing import Any
 
-#TODO metodlara acıklama eklenecek
-#TODO input outputlara type verilecek
 @dataclass
 class PreProcess:
     dataset_path : str
