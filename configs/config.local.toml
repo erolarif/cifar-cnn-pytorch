@@ -1,12 +1,12 @@
 [project] 
-    name = "Project Name"
-    description = "Project Description"
-    version = "Project Version"
-    company = "Yongatek Microelectronics"
-    author = "Author Name"
+    name = "CNN Architecture For CIFAR-10"
+    description = "First CNN architecture project"
+    version = "pre-release"
+    company = "-"
+    author = "Arif EROL / Enes Can AK"
 
 [logger]
-    filepath="./logs/project_name.log"
+    filepath="./logs/cnn-cifar-pytorch.log"
     rotation="50MB"
 
 [cnn-architecture]
