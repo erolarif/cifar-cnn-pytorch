@@ -1,33 +1,67 @@
-## Installation
+## General Info
+
+- In this repository, two CNN model is trained with two difference CNN architectures. One of the architecture is developed by the authors, the other architecture is taken from kaggle and  optimized by the authors. The aim of the repository is having more than %80 accuracy.
+
+## CNN Architectures
+
+### Unique CNN Architecture
+<div align="center">
+  <img src="images/unique_model_last_best.png" alt="Image Alt Text" width = 640  />
+</div>
+
+
+### Optimized CNN Achitecture
+
+<div align="center">
+  <img src="images/optimized_model_last_best.png" alt="Image Alt Text" width = 640  />
+</div>
+
+
+## Loss Graphs of The Models
+
+- The Loss Function of he unique model.
+
+<div align="center">
+  <img src="images/unique_model_loss_plot.png" alt="Image Alt Text" width = 640  />
+</div>
+
+- The Loss Function of he optimized model.
+
+<div align="center">
+  <img src="images/loss_plot.png" alt="Image Alt Text" width = 640  />
+</div>
+
+
+
+
+## Conda Environment Setup Steps
 ```bash
+conda create --name cnn-cifar-pytorch python==3.8
+```
+```bash
+conda activate cnn-cifar-pytorch
+```
+
+```bash
+pip install --upgrade pip wheel setuptools
+```
+
+```bash
+pip install -r requirements.txt
 ```
 
 ## Usage
+- To run code to train the model
 ```bash
+python app.py --env local -t
 ```
 
-## Docker Build
+- To run code to test inference performance of the model
 ```bash
+python app.py --env local -i
 ```
 
-## Docker Run
-### Debug
+- To run code to test inference performance of the model after training
 ```bash
-```
-### Prod
-```bash
-```
-
-## Docker-Compose Run
-```bash
-docker-compose up --build
-```
-
-## Flowchart
-```mermaid
-graph TD;
-  A-->B;
-  A-->C;
-  B-->D;
-  C-->D;
+python app.py --env local -t -i
 ```

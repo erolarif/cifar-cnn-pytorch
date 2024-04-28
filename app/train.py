@@ -1,16 +1,15 @@
 from dataclasses import dataclass
 from typing import Any
-from .cnn_architecture.cnn import CNN
-from .cnn_architecture.cnn_2 import CNN2
+from .cnn_architecture.cnn import UniqueCNN, CNNUniqueConfig
+from .cnn_architecture.cnn_2 import OptimizedCNN, CNNOptimizedConfig
 
-from .cnn_architecture.cnn import CNNConfig
 from .cnn_architecture.utils.preprocess_data import PreProcess
 from .cnn_architecture.utils.post_process import PostProcess
 
 @dataclass
 class Train:
-    cnn1_activation:bool
-    cnn2_activation:bool
+    unique_cnn_activation:bool
+    optimized_cnn_activation:bool
     configs: Any = None
     logger: Any = None
 
@@ -22,11 +21,12 @@ class Train:
         preprocess = PreProcess(**self.configs["preprocess"], logger=self.logger)
         train_loader , test_loader , train_dataset , test_dataset = preprocess()
 
-        if self.cnn1_activation:
-            config = CNNConfig(**self.configs["cnn-architecture"])
-            model = CNN(config)
-        if self.cnn2_activation:
-            model = CNN2()
+        if self.unique_cnn_activation:
+            config = CNNUniqueConfig(**self.configs["cnn-architecture"]["unique"])
+            model = UniqueCNN(config)
+        if self.optimized_cnn_activation:
+            config = CNNOptimizedConfig(**self.configs["cnn-architecture"]["optimized"])
+            model = OptimizedCNN(config)
 
         post_process = PostProcess(**self.configs["postprocess"] , parameters = model.parameters(), logger=self.logger)
 

@@ -10,12 +10,24 @@
     rotation="50MB"
 
 [train]
-    cnn1_activation = true
-    cnn2_activation = false
+    unique_cnn_activation = false
+    optimized_cnn_activation = true
+
+[preprocess]
+    dataset_path = "./data"
+    random_rotation_value = 10
+    batch_size = 200
+    download_dataset = false
+
+[postprocess]
+    save_model_path = "./model/model_last_best.pt"
+    number_of_epoch = 25
+    learning_rate = 0.1
+    momentum = 0.2
 
 [inference]
     model_path= "./model/model_last_best.pt"
-    dataset_path= "./app/data"
+    dataset_path= "./data"
     mean_rgb= [0.49139968,0.48215827,0.44653124]
     stddev_rgb= [0.24703233, 0.24348505, 0.26158768]
 
@@ -94,17 +106,7 @@
         softmax_dim = 1
 
 
-[preprocess]
-    dataset_path = "./data"
-    random_rotation_value = 10
-    batch_size = 200
-    download_dataset = false
 
-[postprocess]
-    save_model_path = "./model/model_last_best.pt"
-    number_of_epoch = 25
-    learning_rate = 0.1
-    momentum = 0.2
 
 
 

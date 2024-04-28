@@ -52,12 +52,10 @@ class CNNOptimizedConfig:
     softmax_dim : int
 
 
-class CNN2(nn.Module):
-
-    
+class OptimizedCNN(nn.Module):
 
     def __init__(self , config):
-        super(CNN2,self).__init__()
+        super(OptimizedCNN,self).__init__()
         self.cnn1 = nn.Conv2d(in_channels=config.image_number_of_channel , out_channels=config.layer1_number_of_channels, kernel_size=config.layer1_filter_kernel_size, stride=config.layer1_stride , padding=self.same_padding(32,3,1))
         self.relu = nn.ReLU()
         self.batchnorm1 = nn.BatchNorm2d(config.layer1_number_of_channels)
