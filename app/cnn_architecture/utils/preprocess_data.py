@@ -47,13 +47,13 @@ class PreProcess:
         mean_r = imgs[:,0,:,:].mean()
         mean_g = imgs[:,1,:,:].mean()
         mean_b = imgs[:,2,:,:].mean()
-        self.logger.info(mean_r,mean_g,mean_b)
+        self.logger.info(f"mean_r: {mean_r},mean_g: {mean_r},mean_b: {mean_b}")
 
         # calculate std over each channel (r,g,b)
         std_r = imgs[:,0,:,:].std()
         std_g = imgs[:,1,:,:].std()
         std_b = imgs[:,2,:,:].std()
-        self.logger.info(std_r,std_g,std_b)
+        self.logger.info(f"std_r: {std_r},std_g: {std_r},std_b: {std_b}")
 
         result = ((mean_r,mean_g,mean_b) , (std_r,std_g,std_b))
 
