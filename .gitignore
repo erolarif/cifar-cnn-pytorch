@@ -2,5 +2,6 @@ __pycache__/
 /app/data
 *.pyc
 *.log
+/models
 *.pth
 *.pt
