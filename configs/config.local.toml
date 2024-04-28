@@ -43,6 +43,7 @@
     download_dataset = false
 
 [postprocess]
+    save_model_path = "./model/model_last_best.pt"
     number_of_epoch = 25
     learning_rate = 0.1
     momentum = 0.2

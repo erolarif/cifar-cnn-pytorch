@@ -1,14 +1,7 @@
-import cv2
 import torch
 import torch.nn as nn
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
-from torch.autograd import Variable
-from torch.utils.data import DataLoader , Dataset
-
-import matplotlib.pyplot as plt
-from PIL import Image
-import numpy as np
 
 from dataclasses import dataclass
 

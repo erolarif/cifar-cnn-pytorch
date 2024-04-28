@@ -7,18 +7,6 @@ from app.cnn_architecture.cnn import CNNConfig
 from app.cnn_architecture.utils.preprocess_data import PreProcess
 from app.cnn_architecture.utils.post_process import PostProcess
 
-import cv2
-import torch
-import torch.nn as nn
-import torchvision.transforms as transforms
-import torchvision.datasets as datasets
-from torch.autograd import Variable
-from torch.utils.data import DataLoader , Dataset
-
-import matplotlib.pyplot as plt
-from PIL import Image
-import numpy as np
-
 
 def main(args, configs):
 
@@ -26,8 +14,6 @@ def main(args, configs):
     logger.debug("############ CIFAR-10 CNN PYTORCH CONFIGURATIONS ############")
     logger.debug(configs)
 
-    #TODO Model Saver yazılması
-    #TODO Graph creater
     preprocess = PreProcess(**configs["preprocess"], logger=logger)
     train_loader , test_loader , train_dataset , test_dataset = preprocess()
     config = CNNConfig(**configs["cnn-architecture"])
@@ -38,10 +24,6 @@ def main(args, configs):
 
     post_process(model,train_loader,test_loader,train_dataset,test_dataset)
     
-    
-  
-
-
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
