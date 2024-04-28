@@ -1,0 +1,50 @@
+[project] 
+    name = "Project Name"
+    description = "Project Description"
+    version = "Project Version"
+    company = "Yongatek Microelectronics"
+    author = "Author Name"
+
+[logger]
+    filepath="./logs/project_name.log"
+    rotation="50MB"
+
+[cnn-architecture]
+    image_number_of_channel = 3
+    
+    layer1_filter_kernel_size = 3
+    layer1_stride = 1
+    layer1_padding = "same"
+    layer1_number_of_channels = 32
+
+    layer2_filter_kernel_size = 3
+    layer2_stride = 1
+    layer2_padding = "same"
+    layer2_number_of_channels = 64
+    first_max_pool_kernel_size = 2
+
+    layer3_filter_kernel_size = 3
+    layer3_stride = 1
+    layer3_padding = 1
+    layer3_number_of_channels = 128
+    second_max_pool_kernel_size = 2
+
+    fc1_in_features = 8192
+    fc1_out_features = 4096
+
+    dropout_p = 0.35
+
+    fc2_out_features = 10
+
+[preprocess]
+    dataset_path = "./app/data"
+    random_rotation_value = 10
+    batch_size = 200
+    download_dataset = false
+
+[postprocess]
+    number_of_epoch = 25
+    learning_rate = 0.1
+    momentum = 0.2
+
+
