@@ -50,6 +50,14 @@ class PostProcess:
         _, predicted = torch.max(outputs , 1)
         self.correct += (predicted == labels).sum()
         self.iterations += 1
+    
+    def draw_loss_graph(self,train_loss,test_loss):
+        fig = plt.figure(figsize = (10,10))
+        plt.plot(train_loss , label = 'Training Loss')
+        plt.plot(test_loss , label = 'Testing Loss')
+        plt.legend()
+        plt.savefig('./logs/loss_plot.png')  # Grafiği 'loss_plot.png' olarak kaydediyoruz
+        plt.show()
 
     def __call__(self,model,train_loader,test_loader,train_dataset,test_dataset):
         if PostProcess.check_cuda_availibility():
@@ -105,3 +113,5 @@ class PostProcess:
             test_accuracy.append((100*self.correct/len(test_dataset)))
 
             print('Epoch{}/{}, Training Loss: {:.3f}, Training Accuracy : {:.3f}, Testing Loss: {:.3f}, Testing Accuracy : {:.3f}'.format(epoch+1 , self.number_of_epoch, train_loss[-1], train_accuracy[-1], test_loss[-1] , test_accuracy[-1]))
+
+        self.draw_loss_graph(train_loss,test_loss)
