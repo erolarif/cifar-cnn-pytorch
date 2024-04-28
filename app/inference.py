@@ -11,8 +11,9 @@ import torchvision.datasets as datasets
 from torch.autograd import Variable
 from torch.utils.data import DataLoader , Dataset
 
+import random
+from typing import List, Any
 
-from typing import List
 
 
 @dataclass
@@ -21,9 +22,13 @@ class ModelInference():
     dataset_path : str
     mean_rgb : List
     stddev_rgb : List
-    
+    classes = ["airplane", "automobile", "bird", "cat", "deer", "dog", "frog", "horse", "ship", "truck"]
+    logger:Any=None
 
     def __post_init__(self):
+        """
+        Initialize the test data
+        """
         self.model = torch.load(self.model_path)
 
         self.transforms_photo = transforms.Compose([transforms.Resize((32,32)),
@@ -41,8 +46,9 @@ class ModelInference():
                                                 shuffle = False)
 
     def predict(self,image):
-
-
+        """
+        Predict the item
+        """
         image = image.unsqueeze(0).cuda()
         output = self.model(image)
 
@@ -79,6 +85,22 @@ class ModelInference():
 
         return image
 
+    def __call__(self) -> None:
+        """
+        Compare predict and image's labels and show the image
+        """
+        selected_image = random.randint(1, 10000)
+        self.logger.info(f"Selcted Image Number is : {selected_image}")
+
+        random_image = self.test_dataset[selected_image][0]
+        prediction = self.predict(random_image)
+        self.logger.info(f"Label : {self.classes[self.test_dataset[selected_image][1]]} "  )
+        self.logger.info(f"prediction = {self.classes[prediction]}")
+
+        imshow_img = self.unnormalize(self.test_dataset[selected_image][0])
+        plt.imshow(np.transpose(imshow_img.numpy(), (1, 2, 0)))
+        plt.show()
+
 
 
 if __name__ == "__main__":
@@ -89,18 +111,6 @@ if __name__ == "__main__":
         "stddev_rgb" : [0.24703233, 0.24348505, 0.26158768]
     }
 
-    classes = [
-        "airplane", 
-        "automobile", 
-        "bird", 
-        "cat", 
-        "deer", 
-        "dog", 
-        "frog", 
-        "horse", 
-        "ship", 
-        "truck"
-    ]
     inference = ModelInference(**dict)
     imshow_img = inference.unnormalize(inference.test_dataset[200][0])
     plt.imshow(np.transpose(imshow_img.numpy(), (1, 2, 0)))
@@ -109,6 +119,5 @@ if __name__ == "__main__":
 
     prediction = inference.predict(random_image)
 
-    print("Label : " , classes[inference.test_dataset[200][1]])
-
-    print("prediction = " , classes[prediction])
+    print("Label : " , inference.classes[inference.test_dataset[200][1]])
+    print("prediction = " , inference.classes[prediction])

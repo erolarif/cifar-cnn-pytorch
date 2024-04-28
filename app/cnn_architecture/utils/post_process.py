@@ -1,9 +1,10 @@
+import os
 from dataclasses import dataclass
+from typing import Any
 import torch
 import torch.nn as nn
 
 import matplotlib.pyplot as plt
-from typing import Any
 
 
 @dataclass
@@ -90,6 +91,8 @@ class PostProcess:
             return
         if test_loss[-1] > test_loss[-2]:
             return
+        if not os.path.exists(os.path.dirname(self.save_model_path)):
+            os.makedirs(os.path.dirname(self.save_model_path))
         torch.save(model, self.save_model_path)
         self.logger.info("Model saved due to decrease test loss from the previous epoch.")
 

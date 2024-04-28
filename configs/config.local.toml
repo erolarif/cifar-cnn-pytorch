@@ -9,6 +9,16 @@
     filepath="./logs/cnn-cifar-pytorch.log"
     rotation="50MB"
 
+[train]
+    cnn1_activation = true
+    cnn2_activation = false
+
+[inference]
+    model_path= "./model/model_last_best.pt"
+    dataset_path= "./app/data"
+    mean_rgb= [0.49139968,0.48215827,0.44653124]
+    stddev_rgb= [0.24703233, 0.24348505, 0.26158768]
+
 [cnn-architecture]
     image_number_of_channel = 3
     
@@ -47,5 +57,6 @@
     number_of_epoch = 25
     learning_rate = 0.1
     momentum = 0.2
+
 
 
