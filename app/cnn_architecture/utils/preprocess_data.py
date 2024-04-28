@@ -14,6 +14,7 @@ import numpy as np
 #TODO logger gelecek
 #TODO metodlara acıklama eklenecek
 #TODO input outputlara type verilecek
+#TODO kullanılmayan kütüphaneler silinecek
 @dataclass
 class PreProcess:
     dataset_path : str
@@ -30,7 +31,7 @@ class PreProcess:
         
         transform = self.augmenting_data(result)
 
-        train_loader , test_loader , train_dataset , test_dataset= self.create_loader(transform)
+        train_loader , test_loader , train_dataset , test_dataset= self.create_loader(transform, result)
 
         return train_loader , test_loader , train_dataset , test_dataset
 
@@ -67,7 +68,7 @@ class PreProcess:
 
         return transform
     
-    def create_loader(self,transform):
+    def create_loader(self,transform, mean_stddev):
         train_dataset = datasets.CIFAR10(root=self.dataset_path,
                                     train = True,
                                     transform = transform,
@@ -75,7 +76,9 @@ class PreProcess:
 
         test_dataset = datasets.CIFAR10(root=self.dataset_path,
                                     train = False,
-                                    transform = transform)
+                                    transform = transforms.Compose([transforms.ToTensor(),
+                                                transforms.Normalize(mean_stddev[0] , mean_stddev[1])
+                                                ]))
 
         train_loader = torch.utils.data.DataLoader(dataset = train_dataset,
                                             batch_size = self.batch_size,
