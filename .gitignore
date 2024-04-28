@@ -2,3 +2,5 @@ __pycache__/
 /app/data
 *.pyc
 *.log
+*.pth
+*.pt

@@ -23,18 +23,18 @@ import numpy as np
 def main(args, configs):
 
     logger = Logger(**configs["logger"])
-    logger.debug("############ [NAME OF PROJECT] CONFIGURATIONS ############")
+    logger.debug("############ CIFAR-10 CNN PYTORCH CONFIGURATIONS ############")
     logger.debug(configs)
-    print(args)
+
     #TODO Model Saver yazılması
     #TODO Graph creater
-    preprocess = PreProcess(**configs["preprocess"])
+    preprocess = PreProcess(**configs["preprocess"], logger=logger)
     train_loader , test_loader , train_dataset , test_dataset = preprocess()
     config = CNNConfig(**configs["cnn-architecture"])
     # model = CNN(config)
     model = CNN2()
 
-    post_process = PostProcess(**configs["postprocess"] , parameters = model.parameters())
+    post_process = PostProcess(**configs["postprocess"] , parameters = model.parameters(), logger=logger)
 
     post_process(model,train_loader,test_loader,train_dataset,test_dataset)
     
