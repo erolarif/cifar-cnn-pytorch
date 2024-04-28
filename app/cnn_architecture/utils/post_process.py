@@ -1,23 +1,16 @@
 from dataclasses import dataclass
-import cv2
 import torch
 import torch.nn as nn
-import torchvision.transforms as transforms
-import torchvision.datasets as datasets
-from torch.autograd import Variable
-from torch.utils.data import DataLoader , Dataset
 
 import matplotlib.pyplot as plt
-from PIL import Image
-import numpy as np
 from typing import Any
 
 
-#TODO logger gelecek
 #TODO metodlara acıklama eklenecek
 #TODO input outputlara type verilecek
 @dataclass
 class PostProcess:
+    save_model_path:str
     number_of_epoch : int
     learning_rate : float
     momentum : float
@@ -62,7 +55,7 @@ class PostProcess:
             return
         if test_loss[-1] > test_loss[-2]:
             return
-        torch.save(model, "model_best.pt")
+        torch.save(model, self.save_model_path)
         self.logger.info("Model saved due to decrease test loss from the previous epoch.")
 
     def __call__(self,model,train_loader,test_loader,train_dataset,test_dataset):
@@ -118,10 +111,8 @@ class PostProcess:
             test_loss.append(self.testing_loss/self.iterations)
             test_accuracy.append((100*self.correct/len(test_dataset)))
 
-
-            self.draw_loss_graph(train_loss,test_loss)
-
             self.logger.info('Epoch{}/{}, Training Loss: {:.3f}, Training Accuracy : {:.3f}, Testing Loss: {:.3f}, Testing Accuracy : {:.3f}'.format(epoch+1 , self.number_of_epoch, train_loss[-1], train_accuracy[-1], test_loss[-1] , test_accuracy[-1]))
             
             self.save_model(model,test_loss,epoch)
+        self.draw_loss_graph(train_loss,test_loss)
 

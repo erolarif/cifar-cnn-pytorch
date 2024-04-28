@@ -83,7 +83,7 @@ class ModelInference():
 
 if __name__ == "__main__":
     dict = {
-        "model_path" : "/home/arif/workplace/cifar-cnn-pytorch/model_best.pt",
+        "model_path" : "/home/ak/workplace/cifar-cnn-pytorch/model_best.pt",
         "dataset_path" : "./app/data",
         "mean_rgb" : [0.49139968,0.48215827,0.44653124],
         "stddev_rgb" : [0.24703233, 0.24348505, 0.26158768]
