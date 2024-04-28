@@ -10,6 +10,7 @@ from torch.utils.data import DataLoader , Dataset
 import matplotlib.pyplot as plt
 from PIL import Image
 import numpy as np
+from typing import Any
 
 #TODO logger gelecek
 #TODO metodlara acıklama eklenecek
@@ -21,7 +22,7 @@ class PreProcess:
     random_rotation_value : int
     batch_size : int
     download_dataset : bool
-
+    logger:Any=None
 
 
     def __call__(self):
@@ -46,13 +47,13 @@ class PreProcess:
         mean_r = imgs[:,0,:,:].mean()
         mean_g = imgs[:,1,:,:].mean()
         mean_b = imgs[:,2,:,:].mean()
-        print(mean_r,mean_g,mean_b)
+        self.logger.info(f"mean_r: {mean_r},mean_g: {mean_r},mean_b: {mean_b}")
 
         # calculate std over each channel (r,g,b)
         std_r = imgs[:,0,:,:].std()
         std_g = imgs[:,1,:,:].std()
         std_b = imgs[:,2,:,:].std()
-        print(std_r,std_g,std_b)
+        self.logger.info(f"std_r: {std_r},std_g: {std_r},std_b: {std_b}")
 
         result = ((mean_r,mean_g,mean_b) , (std_r,std_g,std_b))
 
