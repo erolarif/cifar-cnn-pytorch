@@ -1,4 +1,5 @@
 import torch.nn as nn
+from typing import Any
 
 #TODO Config eklenecek
 class CNN2(nn.Module):
@@ -38,7 +39,16 @@ class CNN2(nn.Module):
         self.fc2 = nn.Linear(in_features=512, out_features=10)
         self.softmax = nn.Softmax(dim=1)
         
-    def forward(self,x):
+    def forward(self,x : Any) -> Any:
+
+        """
+		Forward Propogation of the model
+
+		Args 
+
+		x : Input of the cnn
+		"""
+
         x = self.cnn1(x)
         x = self.relu(x)
         x = self.batchnorm1(x)
@@ -77,7 +87,16 @@ class CNN2(nn.Module):
         return x
     
        
-    def same_padding(self,input_size, kernel_size, stride):
+    def same_padding(self,input_size, kernel_size, stride) -> int:
+       """
+		This method calculates the padding value og the layer to do same padding
+
+        Args
+
+        input_size : width/height value of the image
+        kernel_size : filter size
+        stride : stride value
+	   """
 
        padding = int((((stride -1) * input_size) - stride + kernel_size) / 2)
        # padding = ((input_size) * (stride - 1) + kernel_size - input_size)/2

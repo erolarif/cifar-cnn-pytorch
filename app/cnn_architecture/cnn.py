@@ -4,6 +4,7 @@ import torchvision.transforms as transforms
 import torchvision.datasets as datasets
 
 from dataclasses import dataclass
+from typing import Any
 
 
 @dataclass
@@ -55,7 +56,14 @@ class CNN(nn.Module):
 		self.fc2 = nn.Linear(in_features = 4096 , out_features = 10)
 
 
-	def forward(self,x):
+	def forward(self,x : Any) -> Any:
+		"""
+		Forward Propogation of the model
+
+		Args 
+
+		x : Input of the cnn
+		"""
 		x = self.cnn1(x)
 		x = self.batchnorm1(x)
 		x = self.relu(x)
@@ -78,6 +86,9 @@ class CNN(nn.Module):
 		return x
     
 	def same_padding(self,input_size, kernel_size, stride):
+		"""
+		This method calculates the padding value og the layer to do same padding
+		"""
 		
 		padding = int((((stride -1) * input_size) - stride + kernel_size) / 2)
 		# padding = ((input_size) * (stride - 1) + kernel_size - input_size)/2

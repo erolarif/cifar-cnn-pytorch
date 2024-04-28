@@ -3,7 +3,7 @@ import torch
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
 
-from typing import Any
+from typing import Any,Tuple
 
 @dataclass
 class PreProcess:
@@ -26,10 +26,16 @@ class PreProcess:
         return train_loader , test_loader , train_dataset , test_dataset
 
         
-    def calc_mean_and_std(self,cifar_trainset):
+    def calc_mean_and_std(self,dataset : Any) -> Tuple[Tuple[Any, Any, Any], Tuple[Any, Any, Any]]:
+        """
+        This method calculates mean and standart deviation values of the given dataset.
+
+        Args
+        dataset : dataset [Any]
+        """
         
 
-        imgs = [item[0] for item in cifar_trainset] # item[0] and item[1] are image and its label
+        imgs = [item[0] for item in dataset] # item[0] and item[1] are image and its label
         imgs = torch.stack(imgs, dim=0).numpy()
 
         # calculate mean over each channel (r,g,b)
@@ -48,7 +54,14 @@ class PreProcess:
 
         return result
     
-    def augmenting_data(self,mean_stddev):
+    def augmenting_data(self,mean_stddev : Any) -> transforms.Compose:
+        """
+        This method augments the input training dataset
+
+        Args
+
+        mean_stddev : The mean and standart deviation value of the given training dataset
+        """
         transform = transforms.Compose([
         transforms.RandomHorizontalFlip(), # randomly flip and rotate
         transforms.RandomRotation(self.random_rotation_value),
@@ -58,7 +71,15 @@ class PreProcess:
 
         return transform
     
-    def create_loader(self,transform, mean_stddev):
+    def create_loader(self,transform : Any, mean_stddev : Tuple[Tuple[Any, Any, Any], Tuple[Any, Any, Any]] ) -> Tuple[Any, Any, Any, Any]:
+        """
+        This method creates dataloaders according to given batch sizes and transform methods
+
+        Args
+
+        transform : Normalized Augmented Data
+        mean_stddev : The mean and standart deviation values of the given dataset.
+        """
         train_dataset = datasets.CIFAR10(root=self.dataset_path,
                                     train = True,
                                     transform = transform,
@@ -79,4 +100,5 @@ class PreProcess:
                                                 shuffle = False)
         
         result = train_loader , test_loader , train_dataset , test_dataset
+
         return result
