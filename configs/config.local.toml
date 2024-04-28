@@ -20,34 +20,82 @@
     stddev_rgb= [0.24703233, 0.24348505, 0.26158768]
 
 [cnn-architecture]
-    image_number_of_channel = 3
+    [cnn-architecture.unique]
+        image_number_of_channel = 3
+        
+        layer1_filter_kernel_size = 3
+        layer1_stride = 1
+        layer1_padding = "same"
+        layer1_number_of_channels = 32
+
+        layer2_filter_kernel_size = 3
+        layer2_stride = 1
+        layer2_padding = "same"
+        layer2_number_of_channels = 64
+        first_max_pool_kernel_size = 2
+
+        layer3_filter_kernel_size = 3
+        layer3_stride = 1
+        layer3_padding = 1
+        layer3_number_of_channels = 128
+        second_max_pool_kernel_size = 2
+
+        fc1_in_features = 8192
+        fc1_out_features = 4096
+
+        dropout_p = 0.35
+
+        fc2_out_features = 10
     
-    layer1_filter_kernel_size = 3
-    layer1_stride = 1
-    layer1_padding = "same"
-    layer1_number_of_channels = 32
+    [cnn-architecture.optimized]
+        image_number_of_channel = 3
 
-    layer2_filter_kernel_size = 3
-    layer2_stride = 1
-    layer2_padding = "same"
-    layer2_number_of_channels = 64
-    first_max_pool_kernel_size = 2
+        layer1_filter_kernel_size = 3
+        layer1_stride = 1
+        layer1_padding = "same"
+        layer1_number_of_channels = 32
 
-    layer3_filter_kernel_size = 3
-    layer3_stride = 1
-    layer3_padding = 1
-    layer3_number_of_channels = 128
-    second_max_pool_kernel_size = 2
+        layer2_filter_kernel_size = 3
+        layer2_stride = 1
+        layer2_padding = "same"
+        layer2_number_of_channels = 32
 
-    fc1_in_features = 8192
-    fc1_out_features = 4096
+        first_max_pool_kernel_size = 2
+        dropout_1_p = 0.25
 
-    dropout_p = 0.35
+        layer3_filter_kernel_size = 3
+        layer3_stride = 1
+        layer3_padding = "same"
+        layer3_number_of_channels = 64
 
-    fc2_out_features = 10
+        layer4_filter_kernel_size = 3
+        layer4_stride = 1
+        layer4_padding = "same"
+        layer4_number_of_channels = 64
+        second_max_pool_kernel_size = 2
+        dropout_2_p = 0.25
+
+        layer5_filter_kernel_size = 3
+        layer5_stride = 1
+        layer5_padding = "same"
+        layer5_number_of_channels = 128
+
+        layer6_filter_kernel_size = 3
+        layer6_stride = 1
+        layer6_padding = "same"
+        layer6_number_of_channels = 128
+        third_max_pool_kernel_size = 2
+        dropout_3_p = 0.25
+
+        fc1_in_features = 2048
+        fc1_out_features = 512
+        dropout_4_p = 0.15
+        fc2_out_features = 10
+        softmax_dim = 1
+
 
 [preprocess]
-    dataset_path = "./app/data"
+    dataset_path = "./data"
     random_rotation_value = 10
     batch_size = 200
     download_dataset = false
