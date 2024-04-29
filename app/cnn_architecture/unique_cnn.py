@@ -33,6 +33,8 @@ class CNNUniqueConfig:
 	dropout_p: float
 	fc2_out_features: int
 
+	softmax_dim : int
+
 #TODO same_padding confige gore guncellenecek. 
 #TODO init kismindeki degerler tomldan cekilecek.
 
@@ -45,9 +47,11 @@ class UniqueCNN(nn.Module):
 
 		self.relu = nn.ReLU()
 
-		self.cnn1 = nn.Conv2d(in_channels=config.image_number_of_channel , out_channels=config.layer1_number_of_channels, kernel_size=config.layer1_filter_kernel_size, stride=config.layer1_stride , padding=self.same_padding(32,3,1))
+		self.cnn1 = nn.Conv2d(in_channels=config.image_number_of_channel , out_channels=config.layer1_number_of_channels, kernel_size=config.layer1_filter_kernel_size, stride=config.layer1_stride ,
+						 padding=self.same_padding(32,config.layer1_filter_kernel_size,config.layer1_stride))
 		self.batchnorm1 = nn.BatchNorm2d(config.layer1_number_of_channels)
-		self.cnn2 = nn.Conv2d(in_channels=config.layer1_number_of_channels , out_channels=config.layer2_number_of_channels, kernel_size=config.layer2_filter_kernel_size, stride=config.layer2_stride  , padding=self.same_padding(32,3,1))
+		self.cnn2 = nn.Conv2d(in_channels=config.layer1_number_of_channels , out_channels=config.layer2_number_of_channels, kernel_size=config.layer2_filter_kernel_size, stride=config.layer2_stride  ,
+						 padding=self.same_padding(32,config.layer2_filter_kernel_size,config.layer2_stride))
 		self.batchnorm2 = nn.BatchNorm2d(config.layer2_number_of_channels)
 		self.maxpool1 = nn.MaxPool2d(kernel_size=config.first_max_pool_kernel_size)
 		self.cnn3 = nn.Conv2d(in_channels=config.layer2_number_of_channels , out_channels=config.layer3_number_of_channels, kernel_size=config.layer3_filter_kernel_size, stride=config.layer3_stride, padding=config.layer3_padding)
@@ -56,6 +60,7 @@ class UniqueCNN(nn.Module):
 		self.fc1 = nn.Linear(in_features = config.fc1_in_features , out_features = config.fc1_out_features)
 		self.dropout = nn.Dropout(p=config.dropout_p)
 		self.fc2 = nn.Linear(in_features = config.fc1_out_features , out_features = config.fc2_out_features)
+		self.softmax = nn.Softmax(dim=config.softmax_dim)
 
 
 		# self.relu = nn.ReLU()

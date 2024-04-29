@@ -6,14 +6,14 @@
 
 ### Unique CNN Architecture
 <div align="center">
-  <img src="images/unique_model_last_best.png" alt="Image Alt Text" width = 640  />
+  <img src="images/unique_model_last_best.png" alt="Image Alt Text" height = 640  />
 </div>
 
 
 ### Optimized CNN Achitecture
 
 <div align="center">
-  <img src="images/optimized_model_last_best.png" alt="Image Alt Text" width = 640  />
+  <img src="images/optimized_model_last_best.png" alt="Image Alt Text" height = 640  />
 </div>
 
 
@@ -44,6 +44,11 @@ conda activate cnn-cifar-pytorch
 
 ```bash
 pip install --upgrade pip wheel setuptools
+```
+
+- Torch installation with CUDA
+```bash
+pip3 install torch torchvision torchaudio
 ```
 
 ```bash

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Any
-from .cnn_architecture.cnn import UniqueCNN, CNNUniqueConfig
-from .cnn_architecture.cnn_2 import OptimizedCNN, CNNOptimizedConfig
+from .cnn_architecture.unique_cnn import UniqueCNN, CNNUniqueConfig
+from .cnn_architecture.optimized_cnn import OptimizedCNN, CNNOptimizedConfig
 
 from .cnn_architecture.utils.preprocess_data import PreProcess
 from .cnn_architecture.utils.post_process import PostProcess
