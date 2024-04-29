@@ -16,8 +16,8 @@
 [preprocess]
     dataset_path = "./data"
     random_rotation_value = 10
-    batch_size = 500
-    download_dataset = false
+    batch_size = 200
+    download_dataset = true
 
 [postprocess]
     save_model_path = "./model/model_last_best.pt"

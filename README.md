@@ -46,16 +46,33 @@ conda activate cnn-cifar-pytorch
 pip install --upgrade pip wheel setuptools
 ```
 
-- Torch installation with CUDA
+- Torch installation with CUDA is depends on your CUDA version.You can follow the download steps with  the [LINK](https://pytorch.org/get-started/locally/)
+
+
+- To learn CUDA version
+```bash
+nvidia-smi
+```
+
+For CUDA 12.1
 ```bash
 pip3 install torch torchvision torchaudio
 ```
+
+For CUDA 11.8
+```bash
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+```
+
 
 ```bash
 pip install -r requirements.txt
 ```
 
 ## Usage
+
+- There are two cnn architetures on this repository. The users can choose the model from the toml file. You can set the unique/optimized cnn_activation value to "true" from toml file.
+ 
 - To run code to train the model
 ```bash
 python app.py --env local -t
