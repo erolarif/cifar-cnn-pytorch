@@ -10,13 +10,13 @@
     rotation="50MB"
 
 [train]
-    unique_cnn_activation = false
-    optimized_cnn_activation = true
+    unique_cnn_activation = true
+    optimized_cnn_activation = false
 
 [preprocess]
     dataset_path = "./data"
     random_rotation_value = 10
-    batch_size = 200
+    batch_size = 500
     download_dataset = false
 
 [postprocess]
@@ -58,6 +58,7 @@
         dropout_p = 0.35
 
         fc2_out_features = 10
+        softmax_dim = 1
     
     [cnn-architecture.optimized]
         image_number_of_channel = 3

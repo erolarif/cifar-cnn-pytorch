@@ -56,29 +56,35 @@ class OptimizedCNN(nn.Module):
 
     def __init__(self , config):
         super(OptimizedCNN,self).__init__()
-        self.cnn1 = nn.Conv2d(in_channels=config.image_number_of_channel , out_channels=config.layer1_number_of_channels, kernel_size=config.layer1_filter_kernel_size, stride=config.layer1_stride , padding=self.same_padding(32,3,1))
+        self.cnn1 = nn.Conv2d(in_channels=config.image_number_of_channel , out_channels=config.layer1_number_of_channels, kernel_size=config.layer1_filter_kernel_size, stride=config.layer1_stride ,
+         padding=self.same_padding(32,config.layer1_filter_kernel_size,config.layer1_stride))
         self.relu = nn.ReLU()
         self.batchnorm1 = nn.BatchNorm2d(config.layer1_number_of_channels)
 
-        self.cnn2 = nn.Conv2d(in_channels=config.layer1_number_of_channels , out_channels=config.layer2_number_of_channels, kernel_size=config.layer2_filter_kernel_size, stride=config.layer2_stride , padding=self.same_padding(32,3,1))
+        self.cnn2 = nn.Conv2d(in_channels=config.layer1_number_of_channels , out_channels=config.layer2_number_of_channels, kernel_size=config.layer2_filter_kernel_size, stride=config.layer2_stride , 
+                              padding=self.same_padding(32,config.layer2_filter_kernel_size,config.layer2_stride))
         #RELU
         self.batchnorm2 = nn.BatchNorm2d(config.layer2_number_of_channels)
         self.maxpool1 = nn.MaxPool2d(kernel_size = config.first_max_pool_kernel_size)
         self.dropout1 = nn.Dropout(p = config.dropout_1_p)
         
-        self.cnn3 = nn.Conv2d(in_channels=config.layer2_number_of_channels , out_channels=config.layer3_number_of_channels, kernel_size=config.layer3_filter_kernel_size, stride=config.layer3_stride, padding=self.same_padding(16,3,1))
+        self.cnn3 = nn.Conv2d(in_channels=config.layer2_number_of_channels , out_channels=config.layer3_number_of_channels, kernel_size=config.layer3_filter_kernel_size, stride=config.layer3_stride, 
+                              padding=self.same_padding(16,config.layer3_filter_kernel_size,config.layer3_stride))
         #RELU
         self.batchnorm3 = nn.BatchNorm2d(config.layer3_number_of_channels)
-        self.cnn4 = nn.Conv2d(in_channels=config.layer3_number_of_channels , out_channels=config.layer4_number_of_channels, kernel_size=config.layer4_filter_kernel_size, stride=config.layer4_stride , padding=self.same_padding(16,3,1))
+        self.cnn4 = nn.Conv2d(in_channels=config.layer3_number_of_channels , out_channels=config.layer4_number_of_channels, kernel_size=config.layer4_filter_kernel_size, stride=config.layer4_stride ,
+                              padding=self.same_padding(16,config.layer4_filter_kernel_size,config.layer4_stride))
         self.batchnorm4 = nn.BatchNorm2d(config.layer4_number_of_channels)
         self.maxpool2 = nn.MaxPool2d(kernel_size= config.second_max_pool_kernel_size)
         self.dropout2 = nn.Dropout(p = config.dropout_2_p)
 
 
-        self.cnn5 = nn.Conv2d(in_channels=config.layer4_number_of_channels , out_channels=config.layer5_number_of_channels, kernel_size=config.layer5_filter_kernel_size, stride=config.layer5_stride , padding=self.same_padding(8,3,1))
+        self.cnn5 = nn.Conv2d(in_channels=config.layer4_number_of_channels , out_channels=config.layer5_number_of_channels, kernel_size=config.layer5_filter_kernel_size, stride=config.layer5_stride ,
+                              padding=self.same_padding(8,config.layer5_filter_kernel_size,config.layer5_stride))
         #RELU
         self.batchnorm5 = nn.BatchNorm2d(config.layer5_number_of_channels)
-        self.cnn6 = nn.Conv2d(in_channels=config.layer5_number_of_channels , out_channels=config.layer6_number_of_channels, kernel_size=config.layer6_filter_kernel_size, stride=config.layer6_stride  , padding=self.same_padding(8,3,1))
+        self.cnn6 = nn.Conv2d(in_channels=config.layer5_number_of_channels , out_channels=config.layer6_number_of_channels, kernel_size=config.layer6_filter_kernel_size, stride=config.layer6_stride  ,
+                              padding=self.same_padding(8,config.layer6_filter_kernel_size,config.layer6_stride))
         self.batchnorm6 = nn.BatchNorm2d(config.layer6_number_of_channels)
         self.maxpool3 = nn.MaxPool2d(kernel_size=config.third_max_pool_kernel_size)
         self.dropout3 = nn.Dropout(p=config.dropout_3_p)
