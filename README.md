@@ -70,8 +70,6 @@ pip install -r requirements.txt
 ```
 
 ## Usage
-
-- There are two cnn architetures on this repository. The users can choose the model from the toml file. You can set the unique/optimized cnn_activation value to "true" from toml file.
  
 - To run code to train the model
 ```bash

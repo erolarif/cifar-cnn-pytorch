@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 
 @dataclass
-class PostProcess:
+class Trainer:
     save_model_path:str
     number_of_epoch : int
     learning_rate : float
@@ -100,7 +100,7 @@ class PostProcess:
         """
         Train model with __call__ method.
         """
-        if PostProcess.check_cuda_availibility():
+        if Trainer.check_cuda_availibility():
             model = model.cuda()
 
         train_loss = []
@@ -118,7 +118,7 @@ class PostProcess:
             for i , (inputs,labels) in enumerate(train_loader):
                 
 
-                if PostProcess.check_cuda_availibility():
+                if Trainer.check_cuda_availibility():
                     inputs = inputs.cuda()
                     labels = labels.cuda()
 
@@ -139,7 +139,7 @@ class PostProcess:
 
             for i , (inputs,labels) in enumerate(test_loader):
 
-                if PostProcess.check_cuda_availibility():
+                if Trainer.check_cuda_availibility():
                     inputs = inputs.cuda()
                     labels = labels.cuda()
 

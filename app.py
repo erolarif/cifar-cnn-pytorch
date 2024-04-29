@@ -1,8 +1,12 @@
 from app.config import Configs
 from app.logger import Logger
 
-from app.train import Train
 from app.inference import ModelInference
+
+from app.cnn.unique_cnn import UniqueCNN, CNNUniqueConfig
+
+from app.cnn.utils.preprocess_data import PreProcess
+from app.cnn.utils.trainer import Trainer
 def main(args, configs):
 
     logger = Logger(**configs["logger"])
@@ -10,7 +14,15 @@ def main(args, configs):
     logger.debug(configs)
 
     if args.train:
-        Train(**configs["train"], configs=configs, logger=logger)
+        preprocess = PreProcess(**configs["preprocess"], logger=logger)
+        train_loader , test_loader , train_dataset , test_dataset = preprocess()
+
+        config = CNNUniqueConfig(**configs["cnn-architecture"]["unique"])
+        model = UniqueCNN(config)
+
+        post_process = Trainer(**configs["trainer"] , parameters = model.parameters(), logger=logger)
+
+        post_process(model,train_loader,test_loader,train_dataset,test_dataset)
 
     if args.inference:
         inference = ModelInference(**configs["inference"], logger=logger)
