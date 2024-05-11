@@ -63,10 +63,14 @@ class PreProcess:
         mean_stddev : The mean and standart deviation value of the given training dataset
         """
         transform = transforms.Compose([
-        transforms.RandomHorizontalFlip(), # randomly flip and rotate
-        transforms.RandomRotation(self.random_rotation_value),
-        transforms.ToTensor(),
-        transforms.Normalize(mean_stddev[0] , mean_stddev[1])
+            transforms.RandomHorizontalFlip(),  # Rastgele yatay çevirme
+            transforms.RandomRotation(degrees=10),  # Rastgele döndürme (en fazla 30 derece)
+            transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),  # Renk değişiklikleri
+            # transforms.RandomResizedCrop(size=224, scale=(0.8, 1.0), ratio=(0.75, 1.333)),  # Rastgele boyutlandırılmış kırpma
+            transforms.GaussianBlur(kernel_size=3),  # Gauss bulanıklığı
+            transforms.RandomAffine(degrees=0, translate=(0.1, 0.1), scale=(0.8, 1.2), shear=15),  # Rastgele afine dönüşümler
+            transforms.ToTensor(),  # Tensora dönüştürme
+            transforms.Normalize(mean_stddev[0], mean_stddev[1])  # Normalizasyon
         ])
 
         return transform

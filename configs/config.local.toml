@@ -17,7 +17,7 @@
 
 [trainer]
     save_model_path = "./model/model_last_best.pt"
-    number_of_epoch = 25
+    number_of_epoch = 50
     learning_rate = 0.1
     momentum = 0.2
 
@@ -51,7 +51,7 @@
         fc1_in_features = 8192
         fc1_out_features = 4096
 
-        dropout_p = 0.35
+        dropout_p = 0.2
 
         fc2_out_features = 10
         softmax_dim = 1
