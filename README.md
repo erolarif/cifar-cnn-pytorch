@@ -25,12 +25,6 @@
   <img src="images/unique_model_loss_plot.png" alt="Image Alt Text" width = 640  />
 </div>
 
-- The Loss Function of he optimized model.
-
-<div align="center">
-  <img src="images/loss_plot.png" alt="Image Alt Text" width = 640  />
-</div>
-
 
 
 
@@ -84,4 +78,10 @@ python app.py --env local -i
 - To run code to test inference performance of the model after training
 ```bash
 python app.py --env local -t -i
+```
+
+- If your training process has been interrupted and you want to continue training, or if you want to continue training on a trained model;
+
+```bash
+python app.py --env local -t -tl
 ```
